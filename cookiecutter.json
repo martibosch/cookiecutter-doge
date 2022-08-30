@@ -1,0 +1,21 @@
+{
+    "project_name": "Doge Hello World",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+    "author_name": "Martí Bosch",
+    "gh_username": "martibosch",
+    "description": "Example 'Hello, World!' app using the Doge workflow",
+  "open_source_license": [
+    "GPLv3",
+    "Apache Software License 2.0",
+    "BSD",
+    "MIT",
+    "Not open source"
+  ],
+    "tfc_org_name": "Name of the Terraform Cloud organization.",
+    "droplet_image": "ubuntu-22-04-x64",
+    "droplet_user": "ubuntu",
+    "droplet_region": "fra1",
+    "droplet_size_stage": "s-1vcpu-1gb",
+    "droplet_size_prod": "s-2vcpu-4gb",
+    "docker_compose_version": "2.10.2"
+}

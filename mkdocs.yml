@@ -1,0 +1,16 @@
+---
+site_name: Doge Hello World!
+# site_url: http://www.jieyu.ai
+edit_uri: edit/main/docs
+repo_url: https://github.com/martibosch/doge-hello-world
+repo_name: doge-hello-world
+nav:
+    - Home: index.md
+    - Usage: user-guide.md
+theme:
+    name: readthedocs
+    language: en
+plugins:
+    - include-markdown
+    - search:
+          lang: en

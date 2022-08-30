@@ -1,0 +1,27 @@
+[build-system]
+requires = [
+    "setuptools >= 35.0.2",
+    "setuptools_scm >= 2.0.0, <3"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cookiecutter-doge"
+version = "0.1.0"
+description = "Workflow to CD multi-environment docker-compose applications to Digital Ocean."
+authors = [{name="Martí Bosch", email="marti.bosch@epfl.ch"}]
+readme = "README.md"
+license =  {text="GPL-3.0-only"}
+classifiers=[
+    'Development Status :: 2 - Pre-Alpha',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+]
+
+[project.urls]
+repository = "https://github.com/martibosch/cookiecutter-doge"
