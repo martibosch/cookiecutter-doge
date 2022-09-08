@@ -66,15 +66,15 @@ def test_project_generation(cookies, context):
     check_paths(paths)
 
 
-# def test_validate(cookies, context):
-#     """
-#     Generated project should pass `terraform validate` for all workspaces.
-#     """
-#     result = cookies.bake(extra_context=context)
-#     project_path = str(result.project_path)
-#     try:
-#         sh.make("init-all", _cwd=project_path)
-#         # sh.make("fmt-all", _cwd=project_path)
-#         sh.make("validate-all", _cwd=project_path)
-#     except sh.ErrorReturnCode as e:
-#         pytest.fail(e.stdout.decode())
+def test_validate(cookies, context):
+    """
+    Generated project should pass `terraform validate` for all workspaces.
+    """
+    result = cookies.bake(extra_context=context)
+    project_path = str(result.project_path)
+    try:
+        sh.make("init-all", _cwd=project_path)
+        # sh.make("fmt-all", _cwd=project_path)
+        sh.make("validate-all", _cwd=project_path)
+    except sh.ErrorReturnCode as e:
+        pytest.fail(e.stdout.decode())
