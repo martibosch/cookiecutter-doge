@@ -1,6 +1,7 @@
 import os
 import re
 
+import checksumdir
 import pytest
 from binaryornot.check import is_binary
 
@@ -74,7 +75,9 @@ def test_validate(cookies, context):
     project_path = str(result.project_path)
     try:
         sh.make("init-all", _cwd=project_path)
-        # sh.make("fmt-all", _cwd=project_path)
+        hash = checksumdir.dirhash(project_path)
+        sh.make("fmt-all", _cwd=project_path)
+        assert hash == checksumdir.dirhash(project_path)
         sh.make("validate-all", _cwd=project_path)
     except sh.ErrorReturnCode as e:
         pytest.fail(e.stdout.decode())
