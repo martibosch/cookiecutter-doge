@@ -7,6 +7,7 @@ repo_name: doge-hello-world
 nav:
     - Home: index.md
     - Usage: user-guide.md
+    - Project generation options: project-generation-options.md
 theme:
     name: readthedocs
     language: en
