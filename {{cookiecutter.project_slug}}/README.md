@@ -2,6 +2,7 @@
 
 [![ci](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yml?query=branch%3Adevelop)
 [![deploy](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/deploy.yml?query=branch%3Amain)
+[![GitHub license](https://img.shields.io/github/license/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}.svg)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/LICENSE)
 [![Built with Doge](https://img.shields.io/badge/built%20with-Doge-orange)](https://github.com/martibosch/cookiecutter-doge)
 
 Example app using the [Doge](https://github.com/martibosch/cookiecutter-doge) :dog2: workflow for continuous deployment to Digital Ocean.
