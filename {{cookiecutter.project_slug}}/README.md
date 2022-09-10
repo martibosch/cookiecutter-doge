@@ -108,11 +108,19 @@ If you navigate to [cloud.digitalocean.com](https://cloud.digitalocean.com) and 
 ### 3. GitOps workflow for continuous deployment
 
 ```mermaid
-  graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
+gitGraph:
+    commit ""
+    branch stage
+	branch develop
+	branch some-feature
+    checkout some-feature
+    commit id:"add feature"
+    checkout develop
+	merge some-feature tag:"CI (lint, build)"
+	checkout stage
+	merge develop tag:"deploy stage"
+	checkout main
+    merge stage tag:"deploy prod"
 ```
 
 ## Footnotes
