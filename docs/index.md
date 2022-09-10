@@ -1,6 +1,6 @@
 # Welcome to cookiecutter-doge documentation
 
-Powered by [cookiecutter](https://github.com/cookiecutter/cookiecutter), cookiecutter-doge provides a template to generate Doge :dog2: projects. Doge (Digital Ocean, Github, tErraform) is a GitOps workflow to continuously deploy multi-environment docker-compose applications to Digital Ocean using Github and Terraform.
+Powered by [cookiecutter](https://github.com/cookiecutter/cookiecutter), cookiecutter-doge provides a template to generate Doge projects. Doge (Digital Ocean, Github, tErraform) is a GitOps workflow to continuously deploy multi-environment docker-compose applications to Digital Ocean using Github and Terraform.
 
 ## Project generation options
 
@@ -44,4 +44,4 @@ This page describes all the template options that will be prompted by the cookie
 
 ## User guide
 
-The `README.MD` at the root of generated project provides a step-by-step user guide to get up and running following the Doge :dog2: workflow.
+The `README.MD` at the root of generated project provides a step-by-step user guide to get up and running following the Doge workflow.

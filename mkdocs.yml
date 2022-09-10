@@ -1,9 +1,9 @@
 ---
-site_name: Doge Hello World!
+site_name: cookiecutter-doge
 # site_url: http://www.jieyu.ai
 edit_uri: edit/main/docs
-repo_url: https://github.com/martibosch/doge-hello-world
-repo_name: doge-hello-world
+repo_url: https://github.com/martibosch/cookiecutter-doge
+repo_name: cookiecutter-doge
 nav:
     - Home: index.md
 theme:
@@ -12,3 +12,5 @@ theme:
 plugins:
     - search:
           lang: en
+markdown_extensions:
+  - mdx_truly_sane_lists
