@@ -6,12 +6,9 @@ repo_url: https://github.com/martibosch/doge-hello-world
 repo_name: doge-hello-world
 nav:
     - Home: index.md
-    - Project generation options: project-generation-options.md
-    - User guide: user-guide.md
 theme:
     name: readthedocs
     language: en
 plugins:
-    - include-markdown
     - search:
           lang: en
