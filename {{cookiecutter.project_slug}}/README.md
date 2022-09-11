@@ -1,11 +1,11 @@
 # {{ cookiecutter.project_name }}
 
-[![ci](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yml?query=branch%3Adevelop)
+[![ci](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yml)
 [![deploy](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/deploy.yml?query=branch%3Amain)
 [![GitHub license](https://img.shields.io/github/license/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}.svg)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/LICENSE)
 [![Built with Doge](https://img.shields.io/badge/built%20with-Doge-orange)](https://github.com/martibosch/cookiecutter-doge)
 
-Example app using the [Doge](https://github.com/martibosch/cookiecutter-doge) :dog2: workflow for continuous deployment to Digital Ocean.
+Example app using the [Doge](https://github.com/martibosch/cookiecutter-doge) :dog2: workflow for continuous integration/deployment (CI/CD) to Digital Ocean.
 
 ## Requirements
 
@@ -14,6 +14,7 @@ Example app using the [Doge](https://github.com/martibosch/cookiecutter-doge) :d
 * [GNU Make](https://www.gnu.org/software/make/)
 * [terraform](https://www.terraform.io/)
 * [git](https://git-scm.com/) >=2.28.0
+* [pre-commit](https://pre-commit.com/)
 
 Optional:
 
@@ -70,7 +71,17 @@ which will create three additional workspaces, named `{{ cookiecutter.project_sl
 
 The GitHub repository can be created in two ways:
 
-* *manually from the GitHub web interface*: navigate to [github.com/new](https://github.com/new), create a new empty repository at `{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}`, and follow the instructions to push the first commit. Then, from the root of the generated project, initialize a git repository, add the first commit and push it to the new GitHub repository.
+* *manually from the GitHub web interface*: navigate to [github.com/new](https://github.com/new), create a new empty repository at `{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}`. Then, from the root of the generated project, initialize a git repository, setup pre-commit for the repository, add the first commit and push it to the new GitHub repository as follows:
+ 
+	```bash
+	git init --initial-branch=main  # this only works for git >= 2.28.0
+	pre-commit install
+	git add .
+	git commit -m "first commit"
+	git branch -M main
+	git remote add origin git@github.com:{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}
+	git push -u origin main
+	```
 
 * *using the [GitHub CLI](https://cli.github.com/)*: first, make sure that you are properly authenticated with the GitHub CLI (use the [`gh auth login`](https://cli.github.com/manual/gh_auth_login) command). Then, from the root of the generated project, run `make create-repo`, which will automatically initialize a git repository locally, add the first commit, and push it to a GitHub repository at `{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}`.
 
@@ -104,23 +115,42 @@ make apply-prod
 
 If you navigate to [cloud.digitalocean.com](https://cloud.digitalocean.com) and select the `{{ cookiecutter.project_slug }}` project, you will see that droplets named `{{ cookiecutter.project_slug }}-stage` and `{{ cookiecutter.project_slug }}-prod` have been created for each environment respectively. Additionally, at [github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/settings/secrets/actions](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/settings/secrets/actions)), you will find an [environment secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment) named `DROPLET_HOST`, which contains the IPv4 address of the staging and production hosts respectively.
 
+### 3. GitOps workflow for CI/CD
 
-### 3. GitOps workflow for continuous deployment
+Once the initial infrastructure has been provisioned, CI/CD is ensured by the following GitOps workflow:
+
+1. New features are pushed into a dedicated feature branch.
+2. **develop**: a pull request (PR) to the `develop` branch is created, at which point [CI workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/ci.yml) is run. If the CI workflow passes, the PR is merged, otherwise, fixes are provided in the feature branch until the CI workflow passes.
+3. **stage**: once one or more feature PR are merged into the `develop` branch, they can be deployed to the staging environment by creating a PR to the `stage` branch, which will trigger the ["plan" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/plan.yml). If successful, the PR is merged, at which point the ["deploy" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/deploy.yml) is run, which will deploy the branch contents to the staging environment.
+4. **main**: after a successful deployment to staging, a PR from the stage to the main branch will trigger the ["plan" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/plan.yml), yet this time for the production environment. Likewise, If the workflow passes, the PR can be merged, which will trigger the ["deploy" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/deploy.yml), which will deploy the branch contents to production.
+
+Overall, the Doge :dog2: GitOps workflow can be represented as follows:
 
 ```mermaid
 gitGraph:
-    commit ""
+    commit id:"some commit"
     branch stage
-	branch develop
-	branch some-feature
+    branch develop
+    branch some-feature
     checkout some-feature
     commit id:"add feature"
     checkout develop
-	merge some-feature tag:"CI (lint, build)"
-	checkout stage
-	merge develop tag:"deploy stage"
-	checkout main
+    merge some-feature tag:"CI (lint, build)"
+    checkout stage
+    merge develop tag:"deploy stage"
+    checkout main
     merge stage tag:"deploy prod"
+```
+
+## Destroying infrastructure
+
+The infrastructure provisioned by this setup can be destroyed using GNU Make as follows:
+
+```bash
+make destroy-prod
+make destroy-stage
+make destroy-base
+make destroy-meta
 ```
 
 ## Footnotes

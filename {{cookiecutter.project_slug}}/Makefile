@@ -61,6 +61,7 @@ clean-all: $(foreach DIR, $(WORKSPACE_DIRS), clean-$(TARGET))
 .PHONY: create-repo
 create-repo:
 	git init --initial-branch=main
+	pre-commit install
 	git add .
 	git commit -m "initial commit"
 	gh repo create --public -s . --push -remote origin \
