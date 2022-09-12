@@ -62,22 +62,17 @@ def test_project_generation(cookies, context):
     assert result.project_path.name == context["project_slug"]
     assert result.project_path.is_dir()
 
-    paths = build_files_list(str(result.project_path))
+    project_path = str(result.project_path)
+    paths = build_files_list(project_path)
     assert paths
     check_paths(paths)
 
-
-def test_validate(cookies, context):
-    """
-    Generated project should pass `terraform validate` for all workspaces.
-    """
-    result = cookies.bake(extra_context=context)
-    project_path = str(result.project_path)
     try:
-        sh.make("init-all", _cwd=project_path)
+        sh.git("init", _cwd=project_path)
+        sh.pre_commit("install", _cwd=project_path)
+        # test that pre-commit does not change any file
         hash = checksumdir.dirhash(project_path)
-        sh.make("fmt-all", _cwd=project_path)
+        sh.pre_commit("run", "--all-files", _cwd=project_path)
         assert hash == checksumdir.dirhash(project_path)
-        sh.make("validate-all", _cwd=project_path)
     except sh.ErrorReturnCode as e:
         pytest.fail(e.stdout.decode())
