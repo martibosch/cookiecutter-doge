@@ -13,8 +13,8 @@ repos:
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: 0.18.2
     hooks:
-      - id: check-github-workflows        
-        
+      - id: check-github-workflows
+
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.74.1
     hooks:

@@ -18,7 +18,7 @@ output "gh_repo_name" {
   value       = data.github_repository.repo.name
 }
 
-output "ssh_key" { 
-  description = "Private key." 
+output "ssh_key" {
+  description = "Private key."
   value       = tls_private_key.ssh_key
 }

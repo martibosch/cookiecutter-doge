@@ -72,7 +72,7 @@ which will create three additional workspaces, named `{{ cookiecutter.project_sl
 The GitHub repository can be created in two ways:
 
 * *manually from the GitHub web interface*: navigate to [github.com/new](https://github.com/new), create a new empty repository at `{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}`. Then, from the root of the generated project, initialize a git repository, setup pre-commit for the repository, add the first commit and push it to the new GitHub repository as follows:
- 
+
 	```bash
 	git init --initial-branch=main  # this only works for git >= 2.28.0
 	pre-commit install

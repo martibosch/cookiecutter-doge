@@ -25,7 +25,7 @@ variable "do_project_description" {
 
 variable "gh_repo_name" {
   description = "Name of the `github_repository`."
-  type        = string  
+  type        = string
 }
 
 variable "tf_api_token" {
