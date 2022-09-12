@@ -1,7 +1,7 @@
 # {{ cookiecutter.project_name }}
 
-[![ci](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yml)
-[![deploy](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/deploy.yml?query=branch%3Amain)
+[![ci](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yaml/badge.svg)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/ci.yaml)
+[![deploy](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/deploy.yaml/badge.svg?branch=main)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/actions/workflows/deploy.yaml?query=branch%3Amain)
 [![GitHub license](https://img.shields.io/github/license/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}.svg)](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/LICENSE)
 [![Built with Doge](https://img.shields.io/badge/built%20with-Doge-orange)](https://github.com/martibosch/cookiecutter-doge)
 
@@ -20,10 +20,10 @@ Optional:
 
 * [GitHub CLI](https://cli.github.com/) (if you want to create the GitHub repository from the terminal).
 
-You can install all the software requirements using conda (or mamba) and the `environment.yml` file provided in the root of the repository as follows:
+You can install all the software requirements using conda (or mamba) and the `environment.yaml` file provided in the root of the repository as follows:
 
 ```bash
-conda env create -f environment.yml
+conda env create -f environment.yaml
 # and then work from the newly-created environment as in:
 conda activate doge
 ```
@@ -120,9 +120,9 @@ If you navigate to [cloud.digitalocean.com](https://cloud.digitalocean.com) and 
 Once the initial infrastructure has been provisioned, CI/CD is ensured by the following GitOps workflow:
 
 1. New features are pushed into a dedicated feature branch.
-2. **develop**: a pull request (PR) to the `develop` branch is created, at which point [CI workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/ci.yml) is run. If the CI workflow passes, the PR is merged, otherwise, fixes are provided in the feature branch until the CI workflow passes.
-3. **stage**: once one or more feature PR are merged into the `develop` branch, they can be deployed to the staging environment by creating a PR to the `stage` branch, which will trigger the ["plan" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/plan.yml). If successful, the PR is merged, at which point the ["deploy" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/deploy.yml) is run, which will deploy the branch contents to the staging environment.
-4. **main**: after a successful deployment to staging, a PR from the stage to the main branch will trigger the ["plan" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/plan.yml), yet this time for the production environment. Likewise, If the workflow passes, the PR can be merged, which will trigger the ["deploy" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/deploy.yml), which will deploy the branch contents to production.
+2. **develop**: a pull request (PR) to the `develop` branch is created, at which point [CI workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/ci.yaml) is run. If the CI workflow passes, the PR is merged, otherwise, fixes are provided in the feature branch until the CI workflow passes.
+3. **stage**: once one or more feature PR are merged into the `develop` branch, they can be deployed to the staging environment by creating a PR to the `stage` branch, which will trigger the ["plan" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/plan.yaml). If successful, the PR is merged, at which point the ["deploy" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/deploy.yaml) is run, which will deploy the branch contents to the staging environment.
+4. **main**: after a successful deployment to staging, a PR from the stage to the main branch will trigger the ["plan" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/plan.yaml), yet this time for the production environment. Likewise, If the workflow passes, the PR can be merged, which will trigger the ["deploy" workflow](https://github.com/{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}/blob/main/.github/workflows/deploy.yaml), which will deploy the branch contents to production.
 
 Overall, the Doge :dog2: GitOps workflow can be represented as follows:
 
