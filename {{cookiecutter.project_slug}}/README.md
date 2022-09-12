@@ -36,6 +36,8 @@ conda activate doge
 
 ## Steps
 
+**ACHTUNG** :warning:: it is very important that the steps are followed **in the order** outlined below:
+
 ### 1. Create access tokens
 
 The Doge :dog2: workflow requires three access tokens, which must be set as terraform variables in the `terraform/deploy/meta/vars.tfvars` file (**note** that to avoid disclosing sensitive information, this file is kept out of version control):
@@ -71,19 +73,19 @@ which will create three additional workspaces, named `{{ cookiecutter.project_sl
 
 The GitHub repository can be created in two ways:
 
+* *using the [GitHub CLI](https://cli.github.com/)* (*recommended*): first, make sure that you are properly authenticated with the GitHub CLI (use the [`gh auth login`](https://cli.github.com/manual/gh_auth_login) command). Then, from the root of the generated project, run `make create-repo`, which will automatically initialize a git repository locally, add the first commit, and push it to a GitHub repository at `{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}`.
+
 * *manually from the GitHub web interface*: navigate to [github.com/new](https://github.com/new), create a new empty repository at `{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}`. Then, from the root of the generated project, initialize a git repository, setup pre-commit for the repository, add the first commit and push it to the new GitHub repository as follows:
 
 	```bash
 	git init --initial-branch=main  # this only works for git >= 2.28.0
 	pre-commit install
 	git add .
-	git commit -m "first commit"
+	SKIP=terraform_validate git commit -m "first commit"
 	git branch -M main
 	git remote add origin git@github.com:{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}
 	git push -u origin main
 	```
-
-* *using the [GitHub CLI](https://cli.github.com/)*: first, make sure that you are properly authenticated with the GitHub CLI (use the [`gh auth login`](https://cli.github.com/manual/gh_auth_login) command). Then, from the root of the generated project, run `make create-repo`, which will automatically initialize a git repository locally, add the first commit, and push it to a GitHub repository at `{{ cookiecutter.gh_username }}/{{ cookiecutter.project_slug }}`.
 
 Once the initial commit has been pushed to GitHub, use GNU Make to provision some base infrastructure:
 

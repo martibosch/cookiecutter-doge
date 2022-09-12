@@ -63,7 +63,7 @@ create-repo:
 	git init --initial-branch=main
 	pre-commit install
 	git add .
-	git commit -m "initial commit"
+	SKIP=terraform_validate git commit -m "initial commit"
 	gh repo create --public -s . --push -remote origin \
 		-d "{{ cookiecutter.description | escape}}"
 ########################################################################################
