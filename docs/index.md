@@ -44,4 +44,16 @@ This page describes all the template options that will be prompted by the cookie
 
 ## User guide
 
-The `README.MD` at the root of generated project provides a step-by-step user guide to get up and running following the Doge workflow.
+Before starting, make sure that you have [cookiecutter installed in your system](https://cookiecutter.readthedocs.io/en/stable/installation.html). Then, use it to generate your project:
+
+```bash
+cookiecutter gh:martibosch/cookiecutter-doge
+```
+
+Then, go to the generated directory:
+
+```bash
+cd <what you have entered as the project_slug at setup stage>
+```
+
+and follow the steps outlined in the `README.MD` to get up and running following the Doge workflow.
