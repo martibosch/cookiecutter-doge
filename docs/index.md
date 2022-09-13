@@ -1,6 +1,6 @@
 # Welcome to cookiecutter-doge documentation
 
-Powered by [cookiecutter](https://github.com/cookiecutter/cookiecutter), cookiecutter-doge provides a template to generate Doge projects. Doge (Digital Ocean, Github, tErraform) is a GitOps workflow to continuously deploy multi-environment docker-compose applications to Digital Ocean using Github and Terraform.
+Powered by [cookiecutter](https://github.com/cookiecutter/cookiecutter), cookiecutter-doge provides a template to generate Doge projects. Doge (DOcker, Github, tErraform) is a GitOps workflow to continuously deploy multi-environment docker-compose applications using Github and Terraform. At present, the workflow only works on DigitalOcean, but it is easy to adapt it to other cloud providers.
 
 ## Project generation options
 
