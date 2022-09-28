@@ -84,6 +84,7 @@ resource "tfe_variable" "gh_repo_name" {
 resource "tfe_variable" "tf_api_token" {
   key             = "tf_api_token"
   value           = var.tf_api_token
+  sensitive       = true
   category        = "terraform"
   variable_set_id = tfe_variable_set.base.id
 }
@@ -170,6 +171,7 @@ resource "tfe_variable_set" "shared" {
 resource "tfe_variable" "do_token" {
   key             = "do_token"
   value           = var.do_token
+  sensitive       = true
   category        = "terraform"
   variable_set_id = tfe_variable_set.shared.id
 }
@@ -177,6 +179,7 @@ resource "tfe_variable" "do_token" {
 resource "tfe_variable" "gh_token" {
   key             = "gh_token"
   value           = var.gh_token
+  sensitive       = true
   category        = "terraform"
   variable_set_id = tfe_variable_set.shared.id
 }
