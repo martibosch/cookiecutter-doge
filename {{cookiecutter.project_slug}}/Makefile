@@ -64,6 +64,6 @@ create-repo:
 	pre-commit install
 	git add .
 	SKIP=terraform_validate git commit -m "initial commit"
-	gh repo create --public -s . --push -remote origin \
+	gh repo create {{ cookiecutter.project_slug }} --public -s . --push -r origin \
 		-d "{{ cookiecutter.description | escape}}"
 ########################################################################################
