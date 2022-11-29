@@ -57,6 +57,20 @@ $(foreach DIR, $(WORKSPACE_DIRS), $(eval $(CLEAN_RULE)))
 .PHONY: clean-all
 clean-all: $(foreach DIR, $(WORKSPACE_DIRS), clean-$(TARGET))
 
+define SSH_RULE
+.PHONY: ssh-$(ENV)
+ssh-$(ENV):
+	$(eval TMP_DIR := $(shell mktemp -d)/key)
+	$(eval TMP_SSH_KEY_FILEPATH := $(TMP_DIR)/key)
+	mkdir $(TMP_DIR)
+	terraform -chdir="./$(BASE_DIR)" output -raw ssh_key > $(TMP_SSH_KEY_FILEPATH)
+	chmod 600 $(TMP_SSH_KEY_FILEPATH)
+	ssh $(SSH_FLAGS) -i $(TMP_SSH_KEY_FILEPATH) \
+		{{ cookiecutter.droplet_user }}@$(shell terraform \
+		-chdir="./$(ENV_DIR)" output -raw droplet_host)
+endef
+$(foreach ENV, $(ENVS), $(eval $(SSH_RULE)))
+
 # create repo
 .PHONY: create-repo
 create-repo:
