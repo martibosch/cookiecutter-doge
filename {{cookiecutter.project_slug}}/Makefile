@@ -29,6 +29,13 @@ $(COMMAND)-all: $(foreach DIR, $(WORKSPACE_DIRS), $(COMMAND)-$(TARGET))
 endef
 $(foreach COMMAND, $(NOARGS_COMMANDS), $(eval $(NOARGS_ALL_RULE)))
 
+define UPDATE_RULE
+.PHONY: update-$(TARGET)
+update-$(TARGET):
+	terraform -chdir="./$(DIR)" get -update
+endef
+$(foreach DIR, $(WORKSPACE_DIRS), $(eval $(UPDATE_RULE)))
+
 # plan/apply/destroy
 ## treat meta separatedly because of `-var-file`
 define META_COMMAND_RULE
